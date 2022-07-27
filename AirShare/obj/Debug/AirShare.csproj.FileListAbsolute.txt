@@ -1,0 +1,10 @@
+D:\Project Works\Visual Studio\AirShare\AirShare\bin\Debug\AirShare.exe.config
+D:\Project Works\Visual Studio\AirShare\AirShare\bin\Debug\AirShare.exe
+D:\Project Works\Visual Studio\AirShare\AirShare\bin\Debug\AirShare.pdb
+D:\Project Works\Visual Studio\AirShare\AirShare\obj\Debug\AirShare.csproj.AssemblyReference.cache
+D:\Project Works\Visual Studio\AirShare\AirShare\obj\Debug\AirShare.Properties.Resources.resources
+D:\Project Works\Visual Studio\AirShare\AirShare\obj\Debug\AirShare.csproj.GenerateResource.cache
+D:\Project Works\Visual Studio\AirShare\AirShare\obj\Debug\AirShare.csproj.CoreCompileInputs.cache
+D:\Project Works\Visual Studio\AirShare\AirShare\obj\Debug\AirShare.exe
+D:\Project Works\Visual Studio\AirShare\AirShare\obj\Debug\AirShare.pdb
+D:\Project Works\Visual Studio\AirShare\AirShare\obj\Debug\AirShare.Form1.resources
