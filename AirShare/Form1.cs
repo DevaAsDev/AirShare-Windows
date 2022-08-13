@@ -21,18 +21,45 @@ namespace AirShare
         volatile string[] strlist;
         static volatile bool isClientRunning = true;
         static volatile string selectedFileName = null;
-    
+        static volatile string folderName = null;
+
+        private FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog();
+        private OpenFileDialog openFileDialog = new OpenFileDialog();
+        private MenuItem openMenuItem = new MenuItem();
+        private bool fileOpened = false;
+        private bool folderSelected= false;
 
         public Form1()
         {
             InitializeComponent();
+            InitializeServices();
         }
 
-        private void InitializeServices() { 
-            
+        private void InitializeServices() {
+
+
+            FileStream  f = File.Create("Settings.dp");
+            Console.WriteLine(f.Length);
         }
         private void button1_Click(object sender, EventArgs e)
         {
+
+            try
+            {
+                while (!folderSelected)
+                {
+                    ChooseFolderForPath();
+                    if (!folderName.Equals(null))
+                    {
+                        folderSelected= true;
+                    }
+                }
+            }
+            catch (Exception tg)
+            {
+                Console.WriteLine(tg.Message);
+            }
+
             try
             {
                 isClientRunning = true;
@@ -67,6 +94,7 @@ namespace AirShare
 
                 while (isClientRunning)   //we wait for a connection
                 {
+
                     client = server.AcceptTcpClient();  //if a connection exists, the server will accept it
                     this.Invoke(new Action(() => this.label2.Text = "SERVER CONNECTED"));
                     NetworkStream ns = client.GetStream(); //networkstream is used to send/receive messages
@@ -81,10 +109,7 @@ namespace AirShare
                     this.Invoke(new Action(() => this.progressBar1.Minimum = 0));
                     this.Invoke(new Action(() => this.progressBar1.Maximum = (Convert.ToInt32(strlist[1]))+5),null);
 
-                 
-
-                    string path = "C:\\Users\\Loki\\Downloads\\AirShare\\" + strlist[0];
-
+                    string path = "D:\\" + strlist[0];
                     using (FileStream fs = File.Create(path))
                     
                     Console.WriteLine("RECEIVING FILE");
@@ -111,6 +136,7 @@ namespace AirShare
                     }
                     catch (Exception ex)
                     {
+                        this.Invoke(new Action(() => this.label2.Text = "ERROR - RESTART THE APP"));
                         Console.WriteLine(ex.Message);
                         streem.Close();
                         ns.Dispose();
@@ -226,6 +252,21 @@ namespace AirShare
             return messageToPrint;
         }
 
+        public void ChooseFolderForPath()
+        {
+            DialogResult result = folderBrowserDialog.ShowDialog();
+            if(result == DialogResult.OK)
+            {
+                folderName = folderBrowserDialog.SelectedPath;
+                if (!fileOpened)
+                {
+                    openFileDialog.InitialDirectory = folderName;
+                    openFileDialog.FileName = null;
+                    openMenuItem.PerformClick();
+                }
+                Console.WriteLine(folderName);
+            }
+        }
         private void button2_Click(object sender, EventArgs e)
         {
             try {
@@ -241,6 +282,7 @@ namespace AirShare
 
         private void button3_Click(object sender, EventArgs e)
         {
+            
             try
             {
                 client.Close();
